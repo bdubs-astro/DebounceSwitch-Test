@@ -68,9 +68,9 @@ void hiCallback() {
 
 <h2> Digital Inputs: Pullup vs. Pulldown Resistors </h2>
 
-<img src = "./images for README/NO switch active LOW.png" height = "400"/>  <img src = "./images for README/NO switch active HIGH.png" height = "400"/>
+<img src = "./images for README/NO switch.png" width = "600"/> 
 
-<img src = "./images for README/NC switch active LOW.png" height = "400"/>  <img src = "./images for README/NC switch active HIGH.png" height = "400"/>  
+<img src = "./images for README/NC switch.png" width = "600"/> 
 
 
 <h2>ESP8266 D1 Mini Pinout</h2>
