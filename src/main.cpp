@@ -1,13 +1,23 @@
 #include <Arduino.h>
 #include "DebounceSwitch.h"
 
-// I/O ...
+// Switch ...
 #define swPin 12                // ! Arduino Nano Every D12
 #define intPullup true          // ! use internal pullup resistor?
 void loCallback(), hiCallback();
 DebounceSwitch mySwitch(swPin, intPullup, loCallback, hiCallback);
+
+// LED ...
+// ! Arduino Nano Every: builtin LED on pin 13, active high
 #ifndef LED_BUILTIN 
-#define LED_BUILTIN 13          // ! Arduino Nano Every
+#define LED_BUILTIN 13          
+#endif
+#ifndef LED_ON
+#define LED_ON HIGH      
+#endif
+
+#ifndef LED 
+#define LED LED_BUILTIN          
 #endif
 
 void setup() {
@@ -18,11 +28,11 @@ void setup() {
   Serial.println();
 
   // configure indicator LED ...
-  pinMode(LED_BUILTIN, OUTPUT); 
+  pinMode(LED, OUTPUT); 
 
   // initialize switch ...
   bool swStateInit = mySwitch.initPin(); 
-  digitalWrite(LED_BUILTIN, swStateInit);
+  digitalWrite(LED, swStateInit ? !LED_ON : LED_ON);  // ! NO switch, active low
 
   const char *swStateStr[] = {"LOW", "HIGH"};
   Serial.print("Initial input state is ");
@@ -37,11 +47,11 @@ void loop() {
 
 // callback functions ...
 void loCallback() {
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(LED, LED_ON);
   Serial.println("Input just went LOW."); Serial.println();
 }
 
 void hiCallback() {
-  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(LED, !LED_ON);
   Serial.println("Input just went HIGH."); Serial.println();
 }
