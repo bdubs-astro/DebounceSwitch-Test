@@ -2,69 +2,68 @@
 
 __A c++ class for de-bouncing a mechanical switch.__
 
-- The parameters are:
-  1. a GPIO pin #
-  2. a flag that's true if using an internal pullup resistor
-  3. a pair of callback functions that get called when the input pin goes either high or low
-  4. a debounce delay in milliseconds
+- The required parameters are:
+  - the GPIO input pin #
+  - a flag that's true if using an internal pullup resistor, or false otherwise
+  - a pair of callback functions that get called when the input pin goes either  low or high
+  - a debounce delay in milliseconds
 
 - The ```initPin()``` member function must be called first. It configures the input pin, and returns the inital state of 
 the switch.
 
 - The ```readPin(debounceDelay)``` member function returns the current state (de-bounced), and calls 
-the corresponding callback function whenever the pin's state changes.
+the appropriate callback function whenever the pin's state changes.
 
-<h2> Sample Code:</h2>
+ <!--- <h2> Sample Code:</h2> --->
 
 ```
-#include <Arduino.h>
 #include "DebounceSwitch.h"
 
-// I/O ...
-#define swPin 12                // ! Arduino Nano Every D12
+#define swPin 12                
 #define intPullup true          // ! use internal pullup resistor?
+
 void loCallback(), hiCallback();
 DebounceSwitch mySwitch(swPin, intPullup, loCallback, hiCallback);
-#ifndef LED_BUILTIN 
-#define LED_BUILTIN 13          // ! Arduino Nano Every
-#endif
 
 void setup() {
-  // establish serial comms ...
-  Serial.begin(115200);
-  while(!Serial) {;}                // wait for connection
-  Serial.println(); Serial.println("Serial monitor connected.");
-  Serial.println();
-
-  // configure indicator LED ...
-  pinMode(LED_BUILTIN, OUTPUT); 
-
-  // initialize switch ...
-  bool swStateInit = mySwitch.initPin();
-  digitalWrite(LED_BUILTIN, swStateInit); 
-  
-  const char *swStateStr[] = {"LOW", "HIGH"};
-  Serial.print("Initial input state is ");  
-  Serial.print(swStateStr[swStateInit]);
-  Serial.println("."); Serial.println();
+.
+.
+. 
+  bool swStateInit = mySwitch.initPin();  // initialize switch
 }
 
 void loop() {
-  int debounceDelay = 100;        // (ms)
+  int debounceDelay = 50;       // (ms)
   bool swState = mySwitch.readPin(debounceDelay); 
 }
 
-// callback functions ...
 void loCallback() {
-  digitalWrite(LED_BUILTIN, LOW);
-  Serial.println("Input just went LOW."); Serial.println();
+  Serial.println("Input just went LOW.");
 }
 
 void hiCallback() {
-  digitalWrite(LED_BUILTIN, HIGH);
-  Serial.println("Input just went HIGH."); Serial.println();
+  Serial.println("Input just went HIGH.");
 }
 ```
+Included is an example Platform IO project. You can choose between platforms using a single pre-processor statement. Be sure to select the correct environment before compiling - see the screenshots below.
+
+```
+[env:nano_every]
+platform = atmelmegaavr
+board = nano_every
+framework = arduino
+monitor_speed = 115200
+
+[env:esp12e]
+platform = espressif8266
+board = esp12e
+framework = arduino
+monitor_speed = 115200
+```
+
+<img src = "./images for README/nano environment.png" width = "600"/> 
+
+<img src = "./images for README/esp environment.png" width = "600"/> 
 
 <h2> Digital Inputs: Pullup vs. Pulldown Resistors </h2>
 
