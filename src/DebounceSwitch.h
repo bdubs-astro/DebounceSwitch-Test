@@ -11,34 +11,8 @@ the switch. It must be called first.
 The readPin() command returns the current state (de-bounced), and calls 
 the corresponding callback function whenever the state changes.
 
-Usage:
-#include "DebounceSwitch.h"
-const int swPin = 14;     // ESP8266 D5;
-bool intPullup = false;
-void loCallback();
-void hiCallback();
-DebounceSwitch mySwitch(swPin, intPullup, loCallback, hiCallback);
+Visit https://github.com/bdubs-astro/DebounceSwitch for more details.
 
-void setup() {
-    bool swStateInit = mySwitch.initPin(); 
-    const char *swStateStr[] = {"LOW", "HIGH"};
-    Serial.printf("Initial switch state: %s.\n", swStateStr[swStateInit]);
-}
-
-void loop() {
-    int debounceDelay = 100;  // debounce delay (ms)
-    bool swStateCurr = mySwitch.readPin(int debounceDelay);
-}
-
-void loCallback() {
-  Serial.printf("Switch just went LOW.\n");
-}
-
-void hiCallback() {
-  Serial.printf("Switch just went HIGH.\n");
-}
-
-bdubs, 7-Jul-2021
 */
 
 #ifndef DebounceSwitch_h
