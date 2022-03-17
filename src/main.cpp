@@ -48,8 +48,8 @@ void setup() {
 }
 
 void loop() {
-  int debounceDelay = 100;          // (ms)
-  bool swState = mySwitch.readPin(debounceDelay); 
+  int debounceDelay = 50;           // (ms)
+  mySwitch.readPin(debounceDelay); 
 }
 
 // callback functions ...
