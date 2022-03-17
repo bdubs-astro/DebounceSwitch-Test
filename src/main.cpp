@@ -30,6 +30,7 @@ void setup() {
   // establish serial comms ...
   Serial.begin(115200);
   while(!Serial) {;}                // wait for connection
+  delay(3000);                      // settling time
   Serial.println(); Serial.println("Serial monitor connected."); 
   Serial.println();
 
