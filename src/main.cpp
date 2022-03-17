@@ -54,11 +54,11 @@ void loop() {
 
 // callback functions ...
 void loCallback() {
-  digitalWrite(LED, LED_ON);
+  digitalWrite(LED, LED_ON);                        // ! active low
   Serial.println("Input just went LOW."); Serial.println();
 }
 
 void hiCallback() {
-  digitalWrite(LED, !LED_ON);
+  digitalWrite(LED, !LED_ON);                       // ! active low
   Serial.println("Input just went HIGH."); Serial.println();
 }
