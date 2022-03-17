@@ -39,7 +39,7 @@ void setup() {
 
   // initialize switch ...
   bool swStateInit = mySwitch.initPin(); 
-  digitalWrite(LED, swStateInit ? !LED_ON : LED_ON);  // ! NO switch, active low
+  digitalWrite(LED, swStateInit ? !LED_ON : LED_ON);  // ! active low
 
   const char *swStateStr[] = {"LOW", "HIGH"};
   Serial.print("Initial input state is ");
