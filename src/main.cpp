@@ -1,24 +1,30 @@
 #include <Arduino.h>
 #include "DebounceSwitch.h"
 
-// Switch ...
-#define swPin 12                // ! Arduino Nano Every D12
-#define intPullup true          // ! use internal pullup resistor?
-void loCallback(), hiCallback();
-DebounceSwitch mySwitch(swPin, intPullup, loCallback, hiCallback);
+#define DEVICE 0    // ! Arduino Nano Every = 0, ESP8266 = 1
 
-// LED ...
-// ! Arduino Nano Every: builtin LED on pin 13, active high
-#ifndef LED_BUILTIN 
-#define LED_BUILTIN 13          
-#endif
-#ifndef LED_ON
-#define LED_ON HIGH      
+// I/O ...
+#if DEVICE == 0
+// ? Arduino Nano Every
+#define LED_BUILTIN 13          // ? built in LED on pin 13     
+#define LED_ON HIGH             // ? active high
+#define swPin 12                // ? Arduino Nano Every D12
+#define intPullup true          // ? use internal pullup resistor?
+#elif DEVICE == 1
+// ? ESP8266
+#define LED_BUILTIN 2           // ? built in LED on pin 2  
+#define LED_ON LOW              // ? active low
+#define swPin 13                // ? ESP8266 D7
+#define intPullup false         // ? use internal pullup resistor?
 #endif
 
 #ifndef LED 
 #define LED LED_BUILTIN          
 #endif
+
+// configure switch ...
+void loCallback(), hiCallback();
+DebounceSwitch mySwitch(swPin, intPullup, loCallback, hiCallback);
 
 void setup() {
   // establish serial comms ...
